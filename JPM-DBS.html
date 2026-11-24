@@ -1,0 +1,3301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jarvis Program Plan</title>
+  <style>
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --bg-card: #1e293b;
+      --bg-card-hover: #273549;
+      --border-color: #334155;
+      --border-light: #475569;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --type-platform: #6366f1;
+      --type-platform-bg: rgba(99, 102, 241, 0.15);
+      --type-platform-border: #818cf8;
+
+      --type-ux: #0d9488;
+      --type-ux-bg: rgba(13, 148, 136, 0.15);
+      --type-ux-border: #2dd4bf;
+
+      --type-usecase: #d97706;
+      --type-usecase-bg: rgba(217, 119, 6, 0.15);
+      --type-usecase-border: #f59e0b;
+
+      --status-ontrack: #10b981;
+      --status-ontrack-bg: rgba(16, 185, 129, 0.15);
+      --status-ontrack-border: #34d399;
+
+      --status-delayed: #ef4444;
+      --status-delayed-bg: rgba(239, 68, 68, 0.15);
+      --status-delayed-border: #f87171;
+
+      --status-deployed: #3b82f6;
+      --status-deployed-bg: rgba(59, 130, 246, 0.15);
+      --status-deployed-border: #60a5fa;
+
+      --today-color: #ec4899;
+      --milestone-grid: rgba(148, 163, 184, 0.12);
+      --milestone-line: rgba(148, 163, 184, 0.35);
+      --ga-color: #a855f7;
+    }
+
+    /* Daylight (Light Mode) Theme */
+    body.light-mode {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #e2e8f0;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-color: #cbd5e1;
+      --border-light: #94a3b8;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #64748b;
+      --milestone-grid: rgba(100, 116, 139, 0.15);
+      --milestone-line: rgba(100, 116, 139, 0.35);
+    }
+
+    body.light-mode header {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-mode .brand-info h1 {
+      color: #0f172a;
+    }
+
+    body.light-mode .kpi-row {
+      border-top-color: rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-mode .kpi-card {
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .kpi-card .kpi-val {
+      color: #0f172a;
+    }
+
+    body.light-mode .controls-bar {
+      background: #f1f5f9;
+    }
+
+    body.light-mode .left-pane {
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-mode .left-header {
+      background: #f8fafc;
+      color: #475569;
+    }
+
+    body.light-mode .right-pane {
+      background: #ffffff;
+    }
+
+    body.light-mode .timeline-header-container {
+      background: #f8fafc;
+    }
+
+    body.light-mode .milestone-row {
+      border-bottom-color: rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-mode .milestone-cell {
+      background: rgba(226, 232, 240, 0.65);
+      color: #334155;
+    }
+
+    body.light-mode .week-cell {
+      border-right-color: rgba(100, 116, 139, 0.15);
+      color: #64748b;
+    }
+
+    body.light-mode .timeline-row:hover,
+    body.light-mode .timeline-row.selected {
+      background-color: rgba(241, 245, 249, 0.8);
+    }
+
+    body.light-mode .feature-subitems-container {
+      background: #f8fafc;
+    }
+
+    body.light-mode .subitem-row-left {
+      border-bottom-color: rgba(0, 0, 0, 0.05);
+    }
+
+    body.light-mode .subitem-row-left span:first-child {
+      color: #1e293b !important;
+    }
+
+    body.light-mode .timeline-subitems-wrapper {
+      background: rgba(248, 250, 252, 0.85);
+      border-top-color: rgba(0, 0, 0, 0.06);
+    }
+
+    body.light-mode .pill-persona {
+      background: rgba(100, 116, 139, 0.12);
+      border-color: #cbd5e1;
+      color: #334155;
+    }
+
+    body.light-mode .pill-component {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #2563eb;
+    }
+
+    body.light-mode .ga-date-badge {
+      background: rgba(168, 85, 247, 0.12);
+      border-color: #a855f7;
+      color: #7e22ce;
+    }
+
+    body.light-mode .modal-window {
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    body.light-mode .modal-header h2 {
+      color: #0f172a;
+    }
+
+    body.light-mode .modal-footer {
+      background: #f8fafc;
+    }
+
+    body.light-mode .components-editor-section {
+      background: #f8fafc;
+    }
+
+    body.light-mode .tag-chip {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    body.light-mode .tag-chip.active {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: #6366f1;
+      color: #4338ca;
+    }
+
+    body.light-mode .rollup-summary-box {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: rgba(99, 102, 241, 0.2);
+    }
+
+    body.light-mode .rollup-item .rollup-title {
+      color: #4f46e5;
+    }
+
+    body.light-mode .rollup-item .rollup-value {
+      color: #0f172a;
+    }
+
+    body.light-mode .rollup-item.ga-highlight .rollup-value {
+      color: #7e22ce;
+    }
+
+    body.light-mode #global-tooltip {
+      background: #ffffff;
+      color: #0f172a;
+      border-color: #6366f1;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    body.light-mode #global-tooltip h4 {
+      color: #4338ca;
+    }
+
+    body.light-mode #global-tooltip div {
+      color: #0f172a !important;
+    }
+
+    body.light-mode #global-tooltip .tooltip-label {
+      color: #64748b !important;
+    }
+
+    body.light-mode .row-actions-floating {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Top Navigation / Header */
+    header {
+      background-color: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #6366f1, #06b6d4);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+    }
+
+    .brand-info h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-info p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* Metric Counters */
+    .kpi-row {
+      display: flex;
+      gap: 16px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      overflow-x: auto;
+    }
+
+    .kpi-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+
+    .kpi-card .kpi-val {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .kpi-card .kpi-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+    }
+
+    /* Action Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background-color: #6366f1;
+      color: #fff;
+    }
+    .btn-primary:hover {
+      background-color: #4f46e5;
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-tertiary);
+      border-color: var(--border-light);
+      color: var(--text-main);
+    }
+    .btn-secondary:hover {
+      background-color: #475569;
+    }
+
+    .btn-sm {
+      padding: 4px 8px;
+      font-size: 12px;
+    }
+
+    .btn-icon {
+      padding: 6px;
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      cursor: pointer;
+    }
+    .btn-icon:hover {
+      background: #475569;
+    }
+
+    /* Sub-header Controls Bar */
+    .controls-bar {
+      background: #131d2e;
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .search-filter-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      width: 220px;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    .filter-select {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .filter-select:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    .timeline-nav-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .zoom-btn-group {
+      display: flex;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .zoom-btn {
+      padding: 5px 10px;
+      font-size: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .zoom-btn.active {
+      background: #6366f1;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Main Container (Split Layout) */
+    .planner-layout {
+      display: flex;
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      height: calc(100vh - 150px);
+    }
+
+    /* Left Pane: Feature Lines Table / Cards */
+    .left-pane {
+      width: 580px;
+      min-width: 500px;
+      max-width: 700px;
+      border-right: 2px solid var(--border-color);
+      background: var(--bg-secondary);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      z-index: 20;
+      box-shadow: 4px 0 16px rgba(0,0,0,0.3);
+    }
+
+    .left-header {
+      height: 60px;
+      background: #111b2d;
+      border-bottom: 2px solid var(--border-color);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .features-list {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    /* Feature Line Row in Left Pane */
+    .feature-row {
+      border-bottom: 1px solid var(--border-color);
+      padding: 10px 14px;
+      transition: background 0.15s ease;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-height: 82px;
+      justify-content: center;
+    }
+
+    .feature-row:hover, .feature-row.selected {
+      background-color: var(--bg-card-hover);
+    }
+
+    /* Format Requirements:
+       Line 1: Feature Type, Feature Description (Left Adjusted), GA Date (Right Adjusted) (Entire description on one line)
+       Line 2: Personas, Impacted components (Left Adjusted), Start Date - End Date (Right Adjusted)
+    */
+    .row-line-1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .row-line-1-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .feature-desc-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .row-line-1-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      text-align: right;
+    }
+
+    .ga-date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #e9d5ff;
+      background: rgba(168, 85, 247, 0.2);
+      border: 1px solid #c084fc;
+      border-radius: 4px;
+      padding: 2px 7px;
+      white-space: nowrap;
+    }
+
+    .row-line-2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .row-line-2-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: nowrap;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
+
+    .row-line-2-right {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    .row-actions-floating {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: none;
+      gap: 4px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 2px 4px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      z-index: 10;
+    }
+
+    .feature-row:hover .row-actions-floating {
+      display: flex;
+    }
+
+    /* Component Sub-items expandable rows */
+    .feature-subitems-container {
+      background: #111a2c;
+      border-top: 1px dashed var(--border-color);
+      padding: 8px 14px 10px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    .subitem-row-left {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Badges & Pills */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Types */
+    .badge-platform {
+      background-color: var(--type-platform-bg);
+      color: #a5b4fc;
+      border: 1px solid var(--type-platform-border);
+    }
+    .badge-ux {
+      background-color: var(--type-ux-bg);
+      color: #5eead4;
+      border: 1px solid var(--type-ux-border);
+    }
+    .badge-usecase {
+      background-color: var(--type-usecase-bg);
+      color: #fcd34d;
+      border: 1px solid var(--type-usecase-border);
+    }
+
+    /* Statuses */
+    .status-badge-ontrack {
+      background-color: var(--status-ontrack-bg);
+      color: #6ee7b7;
+      border: 1px solid var(--status-ontrack-border);
+    }
+    .status-badge-delayed {
+      background-color: var(--status-delayed-bg);
+      color: #fca5a5;
+      border: 1px solid var(--status-delayed-border);
+    }
+    .status-badge-deployed {
+      background-color: var(--status-deployed-bg);
+      color: #93c5fd;
+      border: 1px solid var(--status-deployed-border);
+    }
+
+    /* Personas & Components Pills */
+    .pill-persona {
+      background: rgba(148, 163, 184, 0.15);
+      border: 1px solid #475569;
+      color: #cbd5e1;
+      padding: 1px 6px;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .pill-component {
+      background: rgba(59, 130, 246, 0.12);
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      color: #93c5fd;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-weight: 500;
+    }
+
+    /* Right Pane: Gantt & Sliding Timeline */
+    .right-pane {
+      flex: 1;
+      overflow-x: auto;
+      overflow-y: hidden;
+      background: #090e17;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .timeline-inner-container {
+      position: relative;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Bi-Weekly Milestone Header */
+    .timeline-header-container {
+      height: 60px;
+      background: #111b2d;
+      border-bottom: 2px solid var(--border-color);
+      position: sticky;
+      top: 0;
+      z-index: 15;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    .milestone-row {
+      display: flex;
+      height: 34px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .milestone-cell {
+      position: absolute;
+      top: 0;
+      height: 34px;
+      border-right: 1px solid var(--milestone-line);
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+      background: rgba(30, 41, 59, 0.4);
+      white-space: nowrap;
+    }
+
+    .milestone-tag {
+      background: #3b82f6;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    .milestone-subrow {
+      display: flex;
+      height: 24px;
+      position: relative;
+    }
+
+    .week-cell {
+      position: absolute;
+      top: 0;
+      height: 24px;
+      border-right: 1px dashed rgba(148, 163, 184, 0.15);
+      font-size: 10px;
+      color: var(--text-dim);
+      padding-left: 6px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Timeline Body */
+    .timeline-body {
+      flex: 1;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    /* Vertical Gridlines */
+    .grid-lines-layer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .milestone-grid-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: var(--milestone-grid);
+    }
+
+    .today-marker-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--today-color);
+      z-index: 12;
+      box-shadow: 0 0 10px rgba(236, 72, 153, 0.8);
+    }
+
+    .today-badge-top {
+      position: absolute;
+      top: 2px;
+      transform: translateX(-50%);
+      background: var(--today-color);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      white-space: nowrap;
+      z-index: 25;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    }
+
+    /* Rows in Timeline matching Left Pane height */
+    .timeline-row {
+      position: relative;
+      border-bottom: 1px solid var(--border-color);
+      min-height: 82px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background 0.15s ease;
+      z-index: 5;
+    }
+
+    .timeline-row:hover, .timeline-row.selected {
+      background-color: rgba(39, 53, 73, 0.4);
+    }
+
+    /* Gantt Master Bar */
+    .gantt-bar-wrapper {
+      position: relative;
+      height: 38px;
+      display: flex;
+      align-items: center;
+    }
+
+    .gantt-bar {
+      position: absolute;
+      height: 30px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: transform 0.15s ease, filter 0.15s ease;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .gantt-bar:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.15);
+      z-index: 10;
+    }
+
+    .gantt-bar-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .gantt-bar-platform {
+      background: linear-gradient(90deg, #4f46e5, #6366f1);
+      border-color: #818cf8;
+    }
+
+    .gantt-bar-ux {
+      background: linear-gradient(90deg, #0f766e, #0d9488);
+      border-color: #2dd4bf;
+    }
+
+    .gantt-bar-usecase {
+      background: linear-gradient(90deg, #b45309, #d97706);
+      border-color: #fbbf24;
+    }
+
+    /* GA Milestone Diamond Marker */
+    .ga-milestone-indicator {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      cursor: pointer;
+      z-index: 11;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .diamond-icon {
+      width: 14px;
+      height: 14px;
+      background-color: var(--ga-color);
+      transform: rotate(45deg);
+      border: 2px solid #fff;
+      box-shadow: 0 0 8px rgba(168, 85, 247, 0.9);
+      transition: transform 0.2s ease;
+    }
+
+    .ga-milestone-indicator:hover .diamond-icon {
+      transform: rotate(45deg) scale(1.3);
+      background-color: #d8b4fe;
+    }
+
+    .ga-label-tooltip {
+      font-size: 9px;
+      font-weight: 800;
+      color: #fff;
+      background: #7e22ce;
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-top: 4px;
+      white-space: nowrap;
+    }
+
+    /* Component Sub-bars inside timeline */
+    .timeline-subitems-wrapper {
+      background: rgba(15, 23, 42, 0.6);
+      border-top: 1px dashed rgba(255,255,255,0.06);
+      padding: 8px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .subitem-bar-row {
+      position: relative;
+      height: 22px;
+      display: flex;
+      align-items: center;
+    }
+
+    .subitem-bar {
+      position: absolute;
+      height: 16px;
+      background: rgba(99, 102, 241, 0.5);
+      border: 1px solid #818cf8;
+      border-radius: 4px;
+      font-size: 10px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* Tooltip */
+    #global-tooltip {
+      position: fixed;
+      display: none;
+      background: #0f172a;
+      border: 1px solid #6366f1;
+      border-radius: 8px;
+      padding: 12px 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+      color: #fff;
+      font-size: 12px;
+      z-index: 1000;
+      pointer-events: none;
+      max-width: 320px;
+      line-height: 1.5;
+    }
+
+    #global-tooltip h4 {
+      font-size: 13px;
+      color: #a5b4fc;
+      margin-bottom: 6px;
+    }
+
+    #global-tooltip .tooltip-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 3px;
+    }
+
+    #global-tooltip .tooltip-label {
+      color: var(--text-muted);
+    }
+
+    /* Modal / Drawer for Add & Edit */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-window {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 820px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+      animation: modalFadeIn 0.2s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.97); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .modal-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 20px 24px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .modal-footer {
+      padding: 14px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #152033;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+    }
+
+    /* Form Fields */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .form-control {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: var(--text-main);
+      font-size: 14px;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    .form-row-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    /* Type Radio Selector */
+    .type-selector-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .type-choice-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-primary);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .type-choice-label input {
+      display: none;
+    }
+
+    .type-choice-label.selected-platform {
+      background: var(--type-platform-bg);
+      border-color: var(--type-platform-border);
+      color: #a5b4fc;
+    }
+
+    .type-choice-label.selected-ux {
+      background: var(--type-ux-bg);
+      border-color: var(--type-ux-border);
+      color: #5eead4;
+    }
+
+    .type-choice-label.selected-usecase {
+      background: var(--type-usecase-bg);
+      border-color: var(--type-usecase-border);
+      color: #fcd34d;
+    }
+
+    /* Tag Picker Box */
+    .tag-chips-box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      min-height: 42px;
+      align-items: center;
+    }
+
+    .tag-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-light);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #e2e8f0;
+    }
+
+    .tag-chip.active {
+      background: rgba(99, 102, 241, 0.25);
+      border-color: #818cf8;
+      color: #c7d2fe;
+    }
+
+    .tag-chip .remove-tag {
+      cursor: pointer;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+    .tag-chip .remove-tag:hover {
+      color: #ef4444;
+    }
+
+    .tag-adder {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tag-adder input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 12px;
+      width: 100px;
+    }
+
+    /* Components & Sub-Items Editor Section */
+    .components-editor-section {
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: #141e30;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .component-card-edit {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .component-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .component-name-badge {
+      font-size: 13px;
+      font-weight: 700;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dates-inputs-inline {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .date-picker-sm {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .date-picker-sm:focus {
+      outline: none;
+      border-color: #6366f1;
+    }
+
+    /* Sub-items list editor */
+    .subitems-editor-box {
+      margin-left: 18px;
+      padding-left: 12px;
+      border-left: 2px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .subitem-edit-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .subitem-edit-row input[type="text"] {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    /* Autopopulated Date Rollup Display */
+    .rollup-summary-box {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .rollup-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .rollup-item .rollup-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #a5b4fc;
+    }
+
+    .rollup-item .rollup-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rollup-item.ga-highlight .rollup-value {
+      color: #d8b4fe;
+    }
+
+    /* Print Styles */
+    @media print {
+      header, .controls-bar, .modal-backdrop, .row-actions-floating {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .planner-layout {
+        height: auto !important;
+        overflow: visible !important;
+      }
+      .left-pane {
+        width: 450px !important;
+        border-color: #ccc !important;
+      }
+      .feature-row {
+        break-inside: avoid;
+        border-color: #ddd !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Global Tooltip Element -->
+  <div id="global-tooltip"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-top">
+      <div class="brand-title">
+        <div class="brand-logo">J</div>
+        <div class="brand-info">
+          <h1>Jarvis Program Plan</h1>
+          <p>Multi-Horizon Release Roadmap & Bi-Weekly Milestone Gantt</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Daylight / Dark Mode Toggle Button -->
+        <button id="theme-toggle-btn" class="btn btn-secondary" onclick="toggleTheme()" title="Switch daylight/dark mode">
+          <span id="theme-toggle-icon" style="display:inline-flex; align-items:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          </span>
+          <span id="theme-toggle-text">Daylight Mode</span>
+        </button>
+
+        <button class="btn btn-primary" onclick="openAddModal()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          Add Feature
+        </button>
+        <button class="btn btn-secondary" onclick="exportJSON()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Export JSON
+        </button>
+        <button class="btn btn-secondary" onclick="document.getElementById('import-file-input').click()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          Import JSON
+        </button>
+        <input type="file" id="import-file-input" style="display:none" accept=".json" onchange="importJSON(event)">
+        <button class="btn btn-secondary" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print / PDF
+        </button>
+        <button class="btn btn-secondary" onclick="resetToSampleData()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
+          Reset Samples
+        </button>
+      </div>
+    </div>
+
+    <!-- Executive KPI Row -->
+    <div class="kpi-row" id="kpi-container">
+      <!-- Populated via JS -->
+    </div>
+  </header>
+
+  <!-- Controls Bar: Sliding, Today, Search, Filters, Zoom -->
+  <div class="controls-bar">
+    <div class="search-filter-group">
+      <input type="text" id="filter-search" class="search-input" placeholder="Search features..." oninput="renderApp()">
+      <!-- Filter by Month (GA Date) -->
+      <select id="filter-month" class="filter-select" onchange="renderApp()" title="Filter by GA Date Month">
+        <option value="ALL">All GA Months</option>
+      </select>
+      <select id="filter-status" class="filter-select" onchange="renderApp()">
+        <option value="ALL">All Statuses</option>
+        <option value="On Track">On Track</option>
+        <option value="Delayed">Delayed</option>
+        <option value="Deployed">Deployed</option>
+      </select>
+      <select id="filter-type" class="filter-select" onchange="renderApp()">
+        <option value="ALL">All Types</option>
+        <option value="Platform">Platform</option>
+        <option value="UX">UX</option>
+        <option value="Use Case">Use Case</option>
+      </select>
+      <select id="filter-persona" class="filter-select" onchange="renderApp()">
+        <option value="ALL">All Personas</option>
+      </select>
+    </div>
+
+    <div class="timeline-nav-group">
+      <button class="btn btn-secondary btn-sm" onclick="scrollTimeline(-400)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Scroll Left
+      </button>
+      <button class="btn btn-secondary btn-sm" onclick="jumpToToday()" style="border-color: var(--today-color); color: #f472b6;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        Today (11/18/26)
+      </button>
+      <button class="btn btn-secondary btn-sm" onclick="scrollTimeline(400)">
+        Scroll Right
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+
+      <div class="zoom-btn-group">
+        <button class="zoom-btn" id="zoom-compact" onclick="setZoom('compact')">Compact</button>
+        <button class="zoom-btn active" id="zoom-standard" onclick="setZoom('standard')">Standard</button>
+        <button class="zoom-btn" id="zoom-wide" onclick="setZoom('wide')">Wide</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Planner Split View -->
+  <div class="planner-layout">
+    <!-- Left Pane: Feature Lines (Cards) -->
+    <div class="left-pane">
+      <div class="left-header">
+        <span>Feature Lines (<span id="features-count-label">0</span>)</span>
+        <span style="font-size: 11px; color: var(--text-dim); text-transform: none;">Click row to expand sub-items</span>
+      </div>
+      <div class="features-list" id="features-list-el">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <!-- Right Pane: Bi-Weekly Timeline & Gantt -->
+    <div class="right-pane" id="right-pane-el">
+      <div class="timeline-inner-container" id="timeline-inner-container-el">
+        <!-- Timeline Header -->
+        <div class="timeline-header-container" id="timeline-header-container-el">
+          <div class="milestone-row" id="milestones-row-el"></div>
+          <div class="milestone-subrow" id="weeks-row-el"></div>
+        </div>
+
+        <!-- Timeline Body (Grid & Gantt Bars) -->
+        <div class="timeline-body" id="timeline-body-el">
+          <div class="grid-lines-layer" id="grid-lines-layer-el"></div>
+          <!-- Rows will be injected here matching Left Pane rows -->
+          <div id="timeline-rows-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal / Drawer for Add / Edit Feature Line -->
+  <div class="modal-backdrop" id="feature-modal">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Feature Line</h2>
+        <button class="btn-icon" onclick="closeModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Feature Description -->
+        <div class="form-group">
+          <label for="form-feature-desc">Feature Description (Full Text)</label>
+          <input type="text" id="form-feature-desc" class="form-control" placeholder="e.g., Automated Cross-Domain Incident Root Cause Analysis Pipeline">
+        </div>
+
+        <!-- Status & Type -->
+        <div class="form-row-grid">
+          <div class="form-group">
+            <label for="form-feature-status">Feature Status</label>
+            <select id="form-feature-status" class="form-control">
+              <option value="On Track">On Track (Green)</option>
+              <option value="Delayed">Delayed (Red)</option>
+              <option value="Deployed">Deployed (Blue)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Feature Type</label>
+            <div class="type-selector-group">
+              <label class="type-choice-label selected-platform" id="lbl-type-platform">
+                <input type="radio" name="form-feature-type" value="Platform" checked onchange="updateTypeRadioVisuals()">
+                Platform
+              </label>
+              <label class="type-choice-label" id="lbl-type-ux">
+                <input type="radio" name="form-feature-type" value="UX" onchange="updateTypeRadioVisuals()">
+                UX
+              </label>
+              <label class="type-choice-label" id="lbl-type-usecase">
+                <input type="radio" name="form-feature-type" value="Use Case" onchange="updateTypeRadioVisuals()">
+                Use Case
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Target Personas (Multi-Select + Extensible) -->
+        <div class="form-group">
+          <label>Target Personas</label>
+          <div class="tag-chips-box" id="personas-chips-box">
+            <!-- Chips will be generated here -->
+          </div>
+          <div style="margin-top: 6px; display: flex; gap: 8px;">
+            <input type="text" id="new-persona-input" class="form-control" style="width: 200px; padding: 4px 8px; font-size: 12px;" placeholder="+ Add new persona">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="addNewPersonaChip()">Add Persona</button>
+          </div>
+        </div>
+
+        <!-- Components Picker -->
+        <div class="form-group">
+          <label>Impacted Components (Select to configure dates & sub-items)</label>
+          <div class="tag-chips-box" id="components-picker-box">
+            <!-- Checkbox pills -->
+          </div>
+          <div style="margin-top: 6px; display: flex; gap: 8px;">
+            <input type="text" id="new-component-input" class="form-control" style="width: 200px; padding: 4px 8px; font-size: 12px;" placeholder="+ Add custom component">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="addNewCustomComponent()">Add Component</button>
+          </div>
+        </div>
+
+        <!-- Components & Sub-items Date Inputs -->
+        <div class="form-group">
+          <label>Component Work Packages & Sub-Items</label>
+          <div class="components-editor-section" id="components-editor-list">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Autopopulated Non-Editable Date Rollup & GA Date -->
+        <div class="form-group">
+          <label>Autopopulated Date Rollup (Calculated Automatically)</label>
+          <div class="rollup-summary-box">
+            <div class="rollup-item">
+              <span class="rollup-title">Earliest Start Date</span>
+              <span class="rollup-value" id="rollup-start-display">--</span>
+            </div>
+            <div class="rollup-item">
+              <span class="rollup-title">Latest End Date</span>
+              <span class="rollup-value" id="rollup-end-display">--</span>
+            </div>
+            <div class="rollup-item">
+              <span class="rollup-title">Total Duration</span>
+              <span class="rollup-value" id="rollup-duration-display">--</span>
+            </div>
+            <div class="rollup-item ga-highlight">
+              <span class="rollup-title">GA Milestone Date (End + 1d)</span>
+              <span class="rollup-value" id="rollup-ga-display">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveFeatureFromModal()">Save Feature Line</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* =====================================================================
+       Application State & Master Data
+       ===================================================================== */
+    const STORAGE_KEY = "jarvis_program_plan_v2";
+    const THEME_KEY = "jarvis_theme_mode";
+
+    /* =====================================================================
+       Shared (Multi-User) Storage Configuration
+       ---------------------------------------------------------------------
+       All users who open this page share ONE central copy of the plan that
+       is stored on the JPM-DBS server (see server.js). Every Add / Edit /
+       Clone / Delete / Import / Reset is sent to the server and every open
+       browser picks it up automatically.
+
+       API_URL  : address of the shared plan API. The default ("api/plan")
+                  works when the page is served by server.js. If this HTML
+                  is hosted elsewhere, set the full URL, e.g.
+                  "http://your-server:3000/api/plan".
+       If the server cannot be reached the page falls back to this browser's
+       localStorage (original behaviour) and syncs again when it returns.
+       ===================================================================== */
+    const API_URL = "api/plan";
+    const POLL_INTERVAL_MS = 8000;
+    const REQUEST_TIMEOUT_MS = 6000;
+    const CLIENT_ID = "c-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 10);
+
+    let sharedMode = false;      // true once connected to the shared server
+    let serverVersion = 0;       // last version of the shared plan received
+    let pendingOps = [];         // changes not yet confirmed by the server
+    let flushingOps = false;
+    let offlineWarned = false;
+
+    // Anchor Date: 11/18/2026
+    const ANCHOR_DATE = new Date("2026-11-18T00:00:00");
+    const TODAY_DATE = new Date("2026-11-18T00:00:00");
+
+    // Standard pre-populated components
+    const DEFAULT_COMPONENTS = [
+      "Data Product",
+      "XLPT",
+      "RTT",
+      "AID",
+      "NIP",
+      "RCA Engine",
+      "UTP",
+      "Jarvis-AW",
+      "Jarvis-IOP",
+      "VSOP",
+      "Apollo",
+      "Conductor",
+      "Fault Agent",
+      "E2E Test",
+      "Pilot",
+      "Beta"
+    ];
+
+    // Standard Personas
+    const DEFAULT_PERSONAS = ["SP", "NA", "NRB", "NMC"];
+
+    // Zoom configurations (pixels per day)
+    const ZOOM_LEVELS = {
+      compact: 14,   // 14px / day = ~196px per bi-week
+      standard: 24,  // 24px / day = ~336px per bi-week
+      wide: 38       // 38px / day = ~532px per bi-week
+    };
+
+    let currentZoom = "standard";
+    let pxPerDay = ZOOM_LEVELS[currentZoom];
+
+    let availablePersonas = [...DEFAULT_PERSONAS];
+    let availableComponents = [...DEFAULT_COMPONENTS];
+
+    let featuresData = [];
+    let expandedFeatureIds = new Set();
+    let editingFeatureId = null;
+
+    // Timeline range calculations (from Anchor Date minus 4 weeks to Anchor Date + 78 weeks)
+    const TIMELINE_START = new Date("2026-10-21T00:00:00");
+    const TIMELINE_END = new Date("2028-02-02T00:00:00");
+
+    /* =====================================================================
+       Theme Mode Switching Logic
+       ===================================================================== */
+    function initTheme() {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === "light") {
+        document.body.classList.add("light-mode");
+        updateThemeButton(true);
+      } else {
+        document.body.classList.remove("light-mode");
+        updateThemeButton(false);
+      }
+    }
+
+    function toggleTheme() {
+      const isLight = document.body.classList.toggle("light-mode");
+      localStorage.setItem(THEME_KEY, isLight ? "light" : "dark");
+      updateThemeButton(isLight);
+    }
+
+    function updateThemeButton(isLight) {
+      const icon = document.getElementById("theme-toggle-icon");
+      const text = document.getElementById("theme-toggle-text");
+      if (icon && text) {
+        if (isLight) {
+          icon.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+          text.innerText = "Dark Mode";
+        } else {
+          icon.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+          text.innerText = "Daylight Mode";
+        }
+      }
+    }
+
+    /* =====================================================================
+       Sample Realistic Initial Data
+       ===================================================================== */
+    const INITIAL_SAMPLE_FEATURES = [
+      {
+        id: "feat-1",
+        description: "Automated Cross-Domain Anomaly Detection & AI Diagnostics Pipeline",
+        status: "On Track",
+        type: "Platform",
+        personas: ["SP", "NA", "NMC"],
+        components: [
+          {
+            name: "Data Product",
+            startDate: "2026-11-18",
+            endDate: "2026-12-30",
+            subitems: [
+              { name: "RAN Telemetry Ingestion Schemas", startDate: "2026-11-18", endDate: "2026-12-05" },
+              { name: "Real-time Kafka Aggregation Pipeline", startDate: "2026-12-01", endDate: "2026-12-30" }
+            ]
+          },
+          {
+            name: "AID",
+            startDate: "2026-12-16",
+            endDate: "2027-01-27",
+            subitems: [
+              { name: "Time-series Anomaly Inference Engine", startDate: "2026-12-16", endDate: "2027-01-13" },
+              { name: "Confidence Scoring Calibration", startDate: "2027-01-10", endDate: "2027-01-27" }
+            ]
+          },
+          {
+            name: "E2E Test",
+            startDate: "2027-01-28",
+            endDate: "2027-02-17",
+            subitems: [
+              { name: "Automated Regression & Load Validation", startDate: "2027-01-28", endDate: "2027-02-17" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "feat-2",
+        description: "Unified Jarvis Executive Command Center & Observability Portal",
+        status: "On Track",
+        type: "UX",
+        personas: ["NA", "NRB", "NMC"],
+        components: [
+          {
+            name: "VSOP",
+            startDate: "2026-12-02",
+            endDate: "2027-01-13",
+            subitems: [
+              { name: "Design System & React Component Specs", startDate: "2026-12-02", endDate: "2026-12-20" },
+              { name: "Executive KPI Widget Framework", startDate: "2026-12-21", endDate: "2027-01-13" }
+            ]
+          },
+          {
+            name: "Jarvis-AW",
+            startDate: "2027-01-05",
+            endDate: "2027-02-10",
+            subitems: [
+              { name: "Live Topology Heatmap Integration", startDate: "2027-01-05", endDate: "2027-01-25" },
+              { name: "Cross-Persona Role Based Access Tiers", startDate: "2027-01-26", endDate: "2027-02-10" }
+            ]
+          },
+          {
+            name: "Beta",
+            startDate: "2027-02-11",
+            endDate: "2027-03-03",
+            subitems: [
+              { name: "NMC Pilot Operations Feedback Loop", startDate: "2027-02-11", endDate: "2027-03-03" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "feat-3",
+        description: "Autonomous Root Cause Analysis & Multi-Layer Correlation Engine",
+        status: "Delayed",
+        type: "Use Case",
+        personas: ["SP", "NRB"],
+        components: [
+          {
+            name: "RCA Engine",
+            startDate: "2026-11-25",
+            endDate: "2027-01-20",
+            subitems: [
+              { name: "Causal Graph Dependency Modeler", startDate: "2026-11-25", endDate: "2026-12-24" },
+              { name: "Multi-vendor Alarm Correlation Matrix", startDate: "2026-12-25", endDate: "2027-01-20" }
+            ]
+          },
+          {
+            name: "Fault Agent",
+            startDate: "2027-01-15",
+            endDate: "2027-02-24",
+            subitems: [
+              { name: "Autonomous Ticket Generation & Routing", startDate: "2027-01-15", endDate: "2027-02-05" },
+              { name: "Auto-Remediation Feedback Loop", startDate: "2027-02-06", endDate: "2027-02-24" }
+            ]
+          },
+          {
+            name: "Pilot",
+            startDate: "2027-02-25",
+            endDate: "2027-03-24",
+            subitems: [
+              { name: "Regional Market Alpha Field Trial", startDate: "2027-02-25", endDate: "2027-03-24" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "feat-4",
+        description: "Zero-Touch Orchestration Conductor & Dynamic Workload Balancer",
+        status: "Deployed",
+        type: "Platform",
+        personas: ["SP", "NA"],
+        components: [
+          {
+            name: "Conductor",
+            startDate: "2026-10-28",
+            endDate: "2026-11-17",
+            subitems: [
+              { name: "BPMN Distributed Workflow Engine", startDate: "2026-10-28", endDate: "2026-11-10" },
+              { name: "Zero-Downtime High Availability Cluster", startDate: "2026-11-10", endDate: "2026-11-17" }
+            ]
+          },
+          {
+            name: "UTP",
+            startDate: "2026-11-05",
+            endDate: "2026-11-17",
+            subitems: [
+              { name: "Pre-flight Security Gate Validation", startDate: "2026-11-05", endDate: "2026-11-17" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "feat-5",
+        description: "Predictive Service Degradation Early Warning for Enterprise 5G",
+        status: "On Track",
+        type: "Use Case",
+        personas: ["NMC", "SP", "NA"],
+        components: [
+          {
+            name: "Apollo",
+            startDate: "2027-01-13",
+            endDate: "2027-02-24",
+            subitems: [
+              { name: "SLA Drift Forecaster Model", startDate: "2027-01-13", endDate: "2027-02-08" },
+              { name: "Enterprise Customer Impact Matrix", startDate: "2027-02-09", endDate: "2027-02-24" }
+            ]
+          },
+          {
+            name: "Jarvis-IOP",
+            startDate: "2027-02-18",
+            endDate: "2027-03-31",
+            subitems: [
+              { name: "External Webhook & Notification Dispatcher", startDate: "2027-02-18", endDate: "2027-03-10" },
+              { name: "Self-healing Workflow Trigger Handlers", startDate: "2027-03-11", endDate: "2027-03-31" }
+            ]
+          },
+          {
+            name: "Pilot",
+            startDate: "2027-04-01",
+            endDate: "2027-04-21",
+            subitems: [
+              { name: "Top-Tier Enterprise Pilot Validation", startDate: "2027-04-01", endDate: "2027-04-21" }
+            ]
+          }
+        ]
+      }
+    ];
+
+    /* =====================================================================
+       Data Math & Helpers
+       ===================================================================== */
+    function parseDate(dateStr) {
+      if (!dateStr) return null;
+      const d = new Date(dateStr + "T00:00:00");
+      return isNaN(d.getTime()) ? null : d;
+    }
+
+    function formatDateDisplay(d) {
+      if (!d) return "--";
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      const yy = String(d.getFullYear()).slice(-2);
+      return `${mm}/${dd}/${yy}`;
+    }
+
+    function formatDateInput(d) {
+      if (!d) return "";
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const dd = String(d.getDate()).padStart(2, "0");
+      return `${yyyy}-${mm}-${dd}`;
+    }
+
+    function addDays(d, days) {
+      const copy = new Date(d.getTime());
+      copy.setDate(copy.getDate() + days);
+      return copy;
+    }
+
+    function diffDays(d1, d2) {
+      const utc1 = Date.UTC(d1.getFullYear(), d1.getMonth(), d1.getDate());
+      const utc2 = Date.UTC(d2.getFullYear(), d2.getMonth(), d2.getDate());
+      return Math.round((utc2 - utc1) / (1000 * 60 * 60 * 24));
+    }
+
+    // Calculates Earliest Start Date, Latest End Date, Duration, and GA Date (End + 1 Day)
+    function calculateFeatureRollup(feature) {
+      let earliest = null;
+      let latest = null;
+
+      if (feature.components && feature.components.length > 0) {
+        feature.components.forEach(comp => {
+          if (comp.startDate) {
+            const sd = parseDate(comp.startDate);
+            if (sd && (!earliest || sd < earliest)) earliest = sd;
+          }
+          if (comp.endDate) {
+            const ed = parseDate(comp.endDate);
+            if (ed && (!latest || ed > latest)) latest = ed;
+          }
+
+          if (comp.subitems && comp.subitems.length > 0) {
+            comp.subitems.forEach(sub => {
+              if (sub.startDate) {
+                const ssd = parseDate(sub.startDate);
+                if (ssd && (!earliest || ssd < earliest)) earliest = ssd;
+              }
+              if (sub.endDate) {
+                const sed = parseDate(sub.endDate);
+                if (sed && (!latest || sed > latest)) latest = sed;
+              }
+            });
+          }
+        });
+      }
+
+      let gaDate = null;
+      let durationDays = 0;
+      let durationWeeks = 0;
+
+      if (latest) {
+        gaDate = addDays(latest, 1);
+      }
+
+      if (earliest && latest) {
+        durationDays = Math.max(1, diffDays(earliest, latest) + 1);
+        durationWeeks = (durationDays / 7).toFixed(1);
+      }
+
+      return {
+        startDate: earliest,
+        endDate: latest,
+        gaDate: gaDate,
+        durationDays: durationDays,
+        durationWeeks: durationWeeks
+      };
+    }
+
+    /* =====================================================================
+       Persistence
+       ---------------------------------------------------------------------
+       Local browser copy (localStorage) is kept as an offline cache /
+       fallback. The shared server copy is the source of truth whenever the
+       server is reachable (sharedMode === true).
+       ===================================================================== */
+    function loadSavedData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed.features)) {
+            featuresData = parsed.features;
+          } else {
+            featuresData = [...INITIAL_SAMPLE_FEATURES];
+          }
+          if (Array.isArray(parsed.personas)) {
+            availablePersonas = Array.from(new Set([...DEFAULT_PERSONAS, ...parsed.personas]));
+          }
+          if (Array.isArray(parsed.components)) {
+            availableComponents = Array.from(new Set([...DEFAULT_COMPONENTS, ...parsed.components]));
+          }
+          return;
+        }
+      } catch (e) {
+        console.error("Failed loading from localStorage:", e);
+      }
+      featuresData = JSON.parse(JSON.stringify(INITIAL_SAMPLE_FEATURES));
+    }
+
+    function saveData() {
+      try {
+        const payload = {
+          features: featuresData,
+          personas: availablePersonas,
+          components: availableComponents
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      } catch (e) {
+        console.error("Failed saving to localStorage:", e);
+      }
+    }
+
+    /* ---------------------------------------------------------------------
+       Change operations. Every user change is expressed as a small
+       operation which is applied locally AND sent to the server, where it
+       is applied to the latest shared plan. This means two users editing
+       different feature lines at the same time never overwrite each other.
+       --------------------------------------------------------------------- */
+    function applyOp(state, op) {
+      switch (op.type) {
+        case "upsertFeature": {
+          const idx = state.features.findIndex(f => f.id === op.feature.id);
+          if (idx !== -1) state.features[idx] = op.feature;
+          else state.features.push(op.feature);
+          break;
+        }
+        case "deleteFeature":
+          state.features = state.features.filter(f => f.id !== op.id);
+          break;
+        case "addPersona":
+          if (!state.personas.includes(op.value)) state.personas.push(op.value);
+          break;
+        case "addComponent":
+          if (!state.components.includes(op.value)) state.components.push(op.value);
+          break;
+        case "replaceAll":
+          state.features = op.features;
+          state.personas = op.personas;
+          state.components = op.components;
+          break;
+      }
+      return state;
+    }
+
+    function applyOpLocal(op) {
+      const state = applyOp({
+        features: featuresData,
+        personas: availablePersonas,
+        components: availableComponents
+      }, op);
+      featuresData = state.features;
+      availablePersonas = state.personas;
+      availableComponents = state.components;
+    }
+
+    // Apply + persist (local cache) + send to shared server
+    function commitOp(op) {
+      applyOpLocal(op);
+      saveData();
+      if (sharedMode) {
+        pendingOps.push(op);
+        flushOps();
+      }
+    }
+
+    /* ---------------------------------------------------------------------
+       Shared server communication
+       --------------------------------------------------------------------- */
+    async function apiRequest(method, url, body) {
+      const ctrl = (typeof AbortController !== "undefined") ? new AbortController() : null;
+      const timer = ctrl ? setTimeout(() => ctrl.abort(), REQUEST_TIMEOUT_MS) : null;
+      try {
+        const res = await fetch(url, {
+          method: method,
+          headers: body ? { "Content-Type": "application/json" } : undefined,
+          body: body ? JSON.stringify(body) : undefined,
+          cache: "no-store",
+          signal: ctrl ? ctrl.signal : undefined
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
+    }
+
+    function planSignature() {
+      return JSON.stringify([featuresData, availablePersonas, availableComponents]);
+    }
+
+    // Adopt the authoritative copy from the server (re-applying any local changes not yet confirmed)
+    function adoptServerDoc(doc) {
+      const before = planSignature();
+      serverVersion = doc.version || 0;
+
+      const state = {
+        features: JSON.parse(JSON.stringify(doc.features || [])),
+        personas: Array.from(new Set([...DEFAULT_PERSONAS, ...(doc.personas || [])])),
+        components: Array.from(new Set([...DEFAULT_COMPONENTS, ...(doc.components || [])]))
+      };
+      pendingOps.forEach(op => applyOp(state, op));
+
+      featuresData = state.features;
+      availablePersonas = state.personas;
+      availableComponents = state.components;
+      saveData();
+
+      return planSignature() !== before;
+    }
+
+    function renderPreservingScroll() {
+      const list = document.getElementById("features-list-el");
+      const body = document.getElementById("timeline-body-el");
+      const top = list ? list.scrollTop : 0;
+      renderApp();
+      if (list) list.scrollTop = top;
+      if (body) body.scrollTop = top;
+    }
+
+    async function flushOps() {
+      if (flushingOps || !pendingOps.length) return;
+      flushingOps = true;
+      const batch = pendingOps.slice();
+      try {
+        const doc = await apiRequest("POST", API_URL + "/ops", { clientId: CLIENT_ID, ops: batch });
+        pendingOps.splice(0, batch.length);
+        offlineWarned = false;
+        if (adoptServerDoc(doc)) renderPreservingScroll();
+      } catch (e) {
+        console.warn("Could not reach shared plan server; will retry:", e);
+        if (!offlineWarned) {
+          offlineWarned = true;
+          alert("Your change was saved locally but could not be sent to the shared server. It will be retried automatically.");
+        }
+      } finally {
+        flushingOps = false;
+      }
+    }
+
+    async function pollServer() {
+      if (!sharedMode) return;
+      try {
+        if (pendingOps.length) {
+          await flushOps();
+          return;
+        }
+        const doc = await apiRequest("GET", API_URL + "?since=" + serverVersion);
+        if (doc.unchanged) return;
+        if (adoptServerDoc(doc)) renderPreservingScroll();
+      } catch (e) {
+        console.warn("Shared plan poll failed:", e);
+      }
+    }
+
+    // Connect to the shared server; fall back to local-only mode if unavailable
+    async function initSharedData() {
+      try {
+        let doc = await apiRequest("GET", API_URL);
+        if (!doc.initialized) {
+          // First ever load: seed the shared plan (using this browser's existing data if present)
+          loadSavedData();
+          doc = await apiRequest("POST", API_URL + "/ops", {
+            clientId: CLIENT_ID,
+            ops: [{
+              type: "seed",
+              features: featuresData,
+              personas: availablePersonas,
+              components: availableComponents
+            }]
+          });
+        }
+        adoptServerDoc(doc);
+        sharedMode = true;
+        setInterval(pollServer, POLL_INTERVAL_MS);
+        document.addEventListener("visibilitychange", () => {
+          if (!document.hidden) pollServer();
+        });
+        window.addEventListener("focus", pollServer);
+      } catch (e) {
+        console.warn("Shared plan server not available - using local browser storage only.", e);
+        sharedMode = false;
+        loadSavedData();
+      }
+    }
+
+    function resetToSampleData() {
+      if (confirm("Reset program plan to realistic initial sample features? Any unsaved edits will be replaced.")) {
+        commitOp({
+          type: "replaceAll",
+          features: JSON.parse(JSON.stringify(INITIAL_SAMPLE_FEATURES)),
+          personas: [...DEFAULT_PERSONAS],
+          components: [...DEFAULT_COMPONENTS]
+        });
+        renderApp();
+      }
+    }
+
+    function exportJSON() {
+      const payload = {
+        title: "Jarvis Program Plan",
+        exportedAt: new Date().toISOString(),
+        features: featuresData,
+        personas: availablePersonas,
+        components: availableComponents
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Jarvis_Program_Plan_${formatDateInput(new Date())}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function importJSON(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const data = JSON.parse(evt.target.result);
+          if (data && Array.isArray(data.features)) {
+            let personas = availablePersonas;
+            let components = availableComponents;
+            if (Array.isArray(data.personas)) {
+              personas = Array.from(new Set([...availablePersonas, ...data.personas]));
+            }
+            if (Array.isArray(data.components)) {
+              components = Array.from(new Set([...availableComponents, ...data.components]));
+            }
+            commitOp({
+              type: "replaceAll",
+              features: data.features,
+              personas: personas,
+              components: components
+            });
+            renderApp();
+            alert("Program Plan successfully loaded from JSON!");
+          } else {
+            alert("Invalid JSON format. Expected an object with a 'features' array.");
+          }
+        } catch (err) {
+          alert("Error parsing JSON file: " + err.message);
+        }
+        e.target.value = "";
+      };
+      reader.readAsText(file);
+    }
+
+    /* =====================================================================
+       Bi-Weekly Milestone Generator
+       ===================================================================== */
+    let biWeeklyMilestones = [];
+
+    function generateMilestones() {
+      biWeeklyMilestones = [];
+      let mIndex = 1;
+
+      // Start at Anchor Date 11/18/2026 and generate forward
+      let cur = new Date(ANCHOR_DATE.getTime());
+      while (cur <= TIMELINE_END) {
+        biWeeklyMilestones.push({
+          id: `M${mIndex}`,
+          label: `M${mIndex}: ${formatDateDisplay(cur)}`,
+          date: new Date(cur.getTime())
+        });
+        cur = addDays(cur, 14);
+        mIndex++;
+      }
+    }
+
+    /* =====================================================================
+       Timeline Coordinate Conversion
+       ===================================================================== */
+    function dateToPx(d) {
+      const days = diffDays(TIMELINE_START, d);
+      return days * pxPerDay;
+    }
+
+    function getTimelineTotalWidth() {
+      const totalDays = diffDays(TIMELINE_START, TIMELINE_END);
+      return totalDays * pxPerDay;
+    }
+
+    /* =====================================================================
+       Zoom and Navigation
+       ===================================================================== */
+    function setZoom(level) {
+      currentZoom = level;
+      pxPerDay = ZOOM_LEVELS[level];
+
+      document.querySelectorAll(".zoom-btn").forEach(btn => btn.classList.remove("active"));
+      document.getElementById(`zoom-${level}`).classList.add("active");
+
+      renderApp();
+      // Keep today centered or visible
+      jumpToToday();
+    }
+
+    function scrollTimeline(delta) {
+      const el = document.getElementById("right-pane-el");
+      el.scrollBy({ left: delta, behavior: "smooth" });
+    }
+
+    function jumpToToday() {
+      const rightPane = document.getElementById("right-pane-el");
+      const todayX = dateToPx(TODAY_DATE);
+      const paneWidth = rightPane.clientWidth;
+      rightPane.scrollTo({
+        left: Math.max(0, todayX - (paneWidth / 2)),
+        behavior: "smooth"
+      });
+    }
+
+    /* =====================================================================
+       Synchronized Scrolling between Left Pane & Right Timeline Body
+       ===================================================================== */
+    function setupScrollSync() {
+      const leftPaneList = document.getElementById("features-list-el");
+      const rightPaneBody = document.getElementById("timeline-body-el");
+
+      let isSyncingLeft = false;
+      let isSyncingRight = false;
+
+      leftPaneList.onscroll = () => {
+        if (!isSyncingLeft) {
+          isSyncingRight = true;
+          rightPaneBody.scrollTop = leftPaneList.scrollTop;
+        }
+        isSyncingLeft = false;
+      };
+
+      rightPaneBody.onscroll = () => {
+        if (!isSyncingRight) {
+          isSyncingLeft = true;
+          leftPaneList.scrollTop = rightPaneBody.scrollTop;
+        }
+        isSyncingRight = false;
+      };
+    }
+
+    /* =====================================================================
+       Render Application
+       ===================================================================== */
+    function renderApp() {
+      generateMilestones();
+      renderKPIs();
+      renderPersonaFilterOptions();
+      renderMonthFilterOptions();
+
+      const totalWidth = getTimelineTotalWidth();
+      document.getElementById("timeline-inner-container-el").style.width = `${totalWidth}px`;
+
+      renderMilestoneHeader();
+      renderGridLines();
+      renderRows();
+      setupScrollSync();
+    }
+
+    function renderKPIs() {
+      const total = featuresData.length;
+      let onTrack = 0, delayed = 0, deployed = 0;
+      const personaSet = new Set();
+
+      featuresData.forEach(f => {
+        if (f.status === "On Track") onTrack++;
+        else if (f.status === "Delayed") delayed++;
+        else if (f.status === "Deployed") deployed++;
+
+        if (Array.isArray(f.personas)) {
+          f.personas.forEach(p => personaSet.add(p));
+        }
+      });
+
+      const container = document.getElementById("kpi-container");
+      container.innerHTML = `
+        <div class="kpi-card">
+          <span class="kpi-val">${total}</span>
+          <span class="kpi-label">Features</span>
+        </div>
+        <div class="kpi-card" style="border-color: var(--status-ontrack-border);">
+          <span class="kpi-val" style="color: var(--status-ontrack);">${onTrack}</span>
+          <span class="kpi-label">On Track</span>
+        </div>
+        <div class="kpi-card" style="border-color: var(--status-delayed-border);">
+          <span class="kpi-val" style="color: var(--status-delayed);">${delayed}</span>
+          <span class="kpi-label">Delayed</span>
+        </div>
+        <div class="kpi-card" style="border-color: var(--status-deployed-border);">
+          <span class="kpi-val" style="color: var(--status-deployed);">${deployed}</span>
+          <span class="kpi-label">Deployed</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-val" style="color: #c084fc;">${personaSet.size}</span>
+          <span class="kpi-label">Active Personas</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-val" style="color: #67e8f9;">Bi-Weekly</span>
+          <span class="kpi-label">Cadence (M1: 11/18/26)</span>
+        </div>
+      `;
+    }
+
+    function renderPersonaFilterOptions() {
+      const select = document.getElementById("filter-persona");
+      const current = select.value;
+      let html = `<option value="ALL">All Personas</option>`;
+      availablePersonas.forEach(p => {
+        html += `<option value="${p}">${p}</option>`;
+      });
+      select.innerHTML = html;
+      select.value = current;
+    }
+
+    /* Populate GA Months Dropdown dynamically from Features */
+    function renderMonthFilterOptions() {
+      const select = document.getElementById("filter-month");
+      if (!select) return;
+      const current = select.value || "ALL";
+
+      const monthMap = new Map();
+
+      featuresData.forEach(f => {
+        const rollup = calculateFeatureRollup(f);
+        if (rollup.gaDate) {
+          const y = rollup.gaDate.getFullYear();
+          const m = String(rollup.gaDate.getMonth() + 1).padStart(2, "0");
+          const key = `${y}-${m}`;
+          if (!monthMap.has(key)) {
+            monthMap.set(key, new Date(y, rollup.gaDate.getMonth(), 1));
+          }
+        }
+      });
+
+      const sortedKeys = Array.from(monthMap.keys()).sort();
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+
+      let html = `<option value="ALL">All GA Months</option>`;
+      sortedKeys.forEach(key => {
+        const d = monthMap.get(key);
+        const label = `${monthNames[d.getMonth()]} ${d.getFullYear()}`;
+        html += `<option value="${key}">${label}</option>`;
+      });
+
+      select.innerHTML = html;
+      if (sortedKeys.includes(current) || current === "ALL") {
+        select.value = current;
+      } else {
+        select.value = "ALL";
+      }
+    }
+
+    function renderMilestoneHeader() {
+      const milestonesRow = document.getElementById("milestones-row-el");
+      const weeksRow = document.getElementById("weeks-row-el");
+
+      let mHtml = "";
+      biWeeklyMilestones.forEach(m => {
+        const x = dateToPx(m.date);
+        const w = 14 * pxPerDay;
+        mHtml += `
+          <div class="milestone-cell" style="left: ${x}px; width: ${w}px;">
+            <span class="milestone-tag">${m.id}</span>
+            <span>${formatDateDisplay(m.date)}</span>
+          </div>
+        `;
+      });
+      milestonesRow.innerHTML = mHtml;
+
+      // Render week indicators
+      let wHtml = "";
+      let cur = new Date(TIMELINE_START.getTime());
+      while (cur <= TIMELINE_END) {
+        const x = dateToPx(cur);
+        const w = 7 * pxPerDay;
+        wHtml += `
+          <div class="week-cell" style="left: ${x}px; width: ${w}px;">
+            ${formatDateDisplay(cur)}
+          </div>
+        `;
+        cur = addDays(cur, 7);
+      }
+      weeksRow.innerHTML = wHtml;
+    }
+
+    function renderGridLines() {
+      const layer = document.getElementById("grid-lines-layer-el");
+      let html = "";
+
+      // Milestone vertical lines
+      biWeeklyMilestones.forEach(m => {
+        const x = dateToPx(m.date);
+        html += `<div class="milestone-grid-line" style="left: ${x}px;"></div>`;
+      });
+
+      // Today Marker Line
+      const todayX = dateToPx(TODAY_DATE);
+      html += `
+        <div class="today-marker-line" style="left: ${todayX}px;">
+          <div class="today-badge-top">TODAY: 11/18/26</div>
+        </div>
+      `;
+
+      layer.innerHTML = html;
+    }
+
+    /* Filter Predicate */
+    function getFilteredFeatures() {
+      const search = document.getElementById("filter-search").value.toLowerCase().trim();
+      const monthFilter = document.getElementById("filter-month") ? document.getElementById("filter-month").value : "ALL";
+      const status = document.getElementById("filter-status").value;
+      const type = document.getElementById("filter-type").value;
+      const persona = document.getElementById("filter-persona").value;
+
+      return featuresData.filter(f => {
+        const rollup = calculateFeatureRollup(f);
+
+        // Filter by Month (GA Date)
+        if (monthFilter !== "ALL") {
+          if (!rollup.gaDate) return false;
+          const y = rollup.gaDate.getFullYear();
+          const m = String(rollup.gaDate.getMonth() + 1).padStart(2, "0");
+          const key = `${y}-${m}`;
+          if (key !== monthFilter) return false;
+        }
+
+        if (status !== "ALL" && f.status !== status) return false;
+        if (type !== "ALL" && f.type !== type) return false;
+        if (persona !== "ALL" && (!f.personas || !f.personas.includes(persona))) return false;
+        if (search) {
+          const matchDesc = f.description.toLowerCase().includes(search);
+          const matchComp = f.components && f.components.some(c => c.name.toLowerCase().includes(search));
+          const matchPersona = f.personas && f.personas.some(p => p.toLowerCase().includes(search));
+          if (!matchDesc && !matchComp && !matchPersona) return false;
+        }
+        return true;
+      });
+    }
+
+    function renderRows() {
+      const filtered = getFilteredFeatures();
+      document.getElementById("features-count-label").innerText = filtered.length;
+
+      const leftContainer = document.getElementById("features-list-el");
+      const rightContainer = document.getElementById("timeline-rows-container");
+
+      let leftHtml = "";
+      let rightHtml = "";
+
+      if (filtered.length === 0) {
+        leftContainer.innerHTML = `<div style="padding: 30px; text-align: center; color: var(--text-muted); font-size: 13px;">No feature lines match your search criteria.</div>`;
+        rightContainer.innerHTML = "";
+        return;
+      }
+
+      filtered.forEach(feature => {
+        const rollup = calculateFeatureRollup(feature);
+        const isExpanded = expandedFeatureIds.has(feature.id);
+
+        // Status Badge Class
+        let statusBadgeClass = "status-badge-ontrack";
+        if (feature.status === "Delayed") statusBadgeClass = "status-badge-delayed";
+        else if (feature.status === "Deployed") statusBadgeClass = "status-badge-deployed";
+
+        // Type Badge Class
+        let typeBadgeClass = "badge-platform";
+        let barTypeClass = "gantt-bar-platform";
+        if (feature.type === "UX") {
+          typeBadgeClass = "badge-ux";
+          barTypeClass = "gantt-bar-ux";
+        } else if (feature.type === "Use Case") {
+          typeBadgeClass = "badge-usecase";
+          barTypeClass = "gantt-bar-usecase";
+        }
+
+        // Format Personas Badges
+        const personasHtml = (feature.personas || []).map(p => `<span class="pill-persona">${p}</span>`).join(" ");
+
+        // Format Components Badges
+        const compNames = (feature.components || []).map(c => c.name);
+        const compsHtml = compNames.map(c => `<span class="pill-component">${c}</span>`).join(" ");
+
+        // Date Display
+        const dateRangeStr = (rollup.startDate && rollup.endDate)
+          ? `${formatDateDisplay(rollup.startDate)} - ${formatDateDisplay(rollup.endDate)} (${rollup.durationWeeks}w)`
+          : "Dates pending";
+
+        const gaDateStr = rollup.gaDate ? formatDateDisplay(rollup.gaDate) : "--";
+
+        /* ==========================================================
+           LEFT PANE ROW (Strict adherence to requirement #10):
+           Line 1: Feature Type, Feature Description (Left Adjusted), GA Date (Right Adjusted) (Entire description on one line)
+           Line 2: Personas, Impacted components (Left Adjusted), Start Date - End Date (Right Adjusted)
+           ========================================================== */
+        leftHtml += `
+          <div class="feature-row" id="left-row-${feature.id}" onclick="toggleExpandRow('${feature.id}', event)">
+            <!-- Floating Quick Actions -->
+            <div class="row-actions-floating" onclick="event.stopPropagation()">
+              <button class="btn btn-secondary btn-sm" title="Edit Feature" onclick="openEditModal('${feature.id}')">Edit</button>
+              <button class="btn btn-secondary btn-sm" title="Clone Feature" onclick="cloneFeature('${feature.id}')">Clone</button>
+              <button class="btn btn-secondary btn-sm" title="Delete Feature" style="color: #f87171;" onclick="deleteFeature('${feature.id}')">Delete</button>
+            </div>
+
+            <!-- Line 1: Type, Status, Description (Left) | GA Date (Right) -->
+            <div class="row-line-1">
+              <div class="row-line-1-left">
+                <span class="badge ${typeBadgeClass}">${feature.type}</span>
+                <span class="badge ${statusBadgeClass}">${feature.status}</span>
+                <span class="feature-desc-text" title="${escapeHtml(feature.description)}">${escapeHtml(feature.description)}</span>
+              </div>
+              <div class="row-line-1-right">
+                <span class="ga-date-badge" title="GA Milestone: Latest End Date + 1 Day">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 12l10 10 10-10L12 2z"/></svg>
+                  GA: ${gaDateStr}
+                </span>
+              </div>
+            </div>
+
+            <!-- Line 2: Personas, Components (Left) | Start - End (Right) -->
+            <div class="row-line-2">
+              <div class="row-line-2-left">
+                <span style="display:inline-flex; gap:3px;">${personasHtml}</span>
+                <span style="color:var(--text-dim); font-size:10px;">|</span>
+                <span style="display:inline-flex; gap:3px; overflow:hidden;">${compsHtml}</span>
+              </div>
+              <div class="row-line-2-right">
+                ${dateRangeStr}
+              </div>
+            </div>
+          </div>
+        `;
+
+        // If expanded, render sub-items in left pane
+        if (isExpanded) {
+          leftHtml += `
+            <div class="feature-subitems-container" id="left-sub-${feature.id}">
+              <div style="font-weight: 700; color: #a5b4fc; font-size: 11px; text-transform: uppercase;">Component Deliverables:</div>
+          `;
+          (feature.components || []).forEach(comp => {
+            leftHtml += `
+              <div class="subitem-row-left">
+                <span style="font-weight:600; color:#cbd5e1;">▪ ${comp.name}</span>
+                <span>${comp.startDate ? formatDateDisplay(parseDate(comp.startDate)) : "--"} - ${comp.endDate ? formatDateDisplay(parseDate(comp.endDate)) : "--"}</span>
+              </div>
+            `;
+
+            if (comp.subitems && comp.subitems.length > 0) {
+              comp.subitems.forEach(sub => {
+                leftHtml += `
+                  <div class="subitem-row-left" style="padding-left: 14px; font-size: 11px; color: var(--text-dim);">
+                    <span>↳ ${escapeHtml(sub.name)}</span>
+                    <span>${sub.startDate ? formatDateDisplay(parseDate(sub.startDate)) : "--"} - ${sub.endDate ? formatDateDisplay(parseDate(sub.endDate)) : "--"}</span>
+                  </div>
+                `;
+              });
+            }
+          });
+          leftHtml += `</div>`;
+        }
+
+        /* ==========================================================
+           RIGHT PANE TIMELINE ROW (Gantt Master Bar + GA Diamond + Sub-bars)
+           ========================================================== */
+        let barX = 0;
+        let barW = 0;
+        let hasDates = rollup.startDate && rollup.endDate;
+
+        if (hasDates) {
+          barX = dateToPx(rollup.startDate);
+          barW = Math.max(8, (diffDays(rollup.startDate, rollup.endDate) + 1) * pxPerDay);
+        }
+
+        let gaDiamondX = 0;
+        if (rollup.gaDate) {
+          gaDiamondX = dateToPx(rollup.gaDate);
+        }
+
+        const tooltipData = {
+          desc: feature.description,
+          type: feature.type,
+          status: feature.status,
+          personas: (feature.personas || []).join(", "),
+          components: compNames.join(", "),
+          start: rollup.startDate ? formatDateDisplay(rollup.startDate) : "--",
+          end: rollup.endDate ? formatDateDisplay(rollup.endDate) : "--",
+          ga: gaDateStr,
+          duration: `${rollup.durationDays} days (${rollup.durationWeeks} weeks)`
+        };
+
+        rightHtml += `
+          <div class="timeline-row" id="right-row-${feature.id}">
+            <div class="gantt-bar-wrapper">
+              ${hasDates ? `
+                <div class="gantt-bar ${barTypeClass}"
+                     style="left: ${barX}px; width: ${barW}px;"
+                     onmousemove="showTooltip(event, ${escapeJsonAttr(tooltipData)})"
+                     onmouseleave="hideTooltip()"
+                     onclick="openEditModal('${feature.id}')">
+                  <span class="gantt-bar-title">${escapeHtml(feature.description)}</span>
+                </div>
+              ` : `
+                <div style="padding-left: 20px; font-size: 11px; color: var(--text-dim); font-style: italic;">
+                  (Component dates not set)
+                </div>
+              `}
+
+              ${rollup.gaDate ? `
+                <div class="ga-milestone-indicator"
+                     style="left: ${gaDiamondX}px;"
+                     onmousemove="showTooltip(event, ${escapeJsonAttr({
+                       title: "GA Milestone",
+                       desc: feature.description,
+                       ga: gaDateStr,
+                       rule: "End Date + 1 Day",
+                       status: feature.status
+                     })})"
+                     onmouseleave="hideTooltip()">
+                  <div class="diamond-icon"></div>
+                  <div class="ga-label-tooltip">GA ${gaDateStr}</div>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+
+        // If expanded, render component sub-bars on timeline matching left sub-items height
+        if (isExpanded) {
+          rightHtml += `<div class="timeline-subitems-wrapper" id="right-sub-${feature.id}">`;
+          // Header spacer
+          rightHtml += `<div style="height: 14px;"></div>`;
+
+          (feature.components || []).forEach(comp => {
+            const compStart = parseDate(comp.startDate);
+            const compEnd = parseDate(comp.endDate);
+            let compX = 0, compW = 0;
+            if (compStart && compEnd) {
+              compX = dateToPx(compStart);
+              compW = Math.max(6, (diffDays(compStart, compEnd) + 1) * pxPerDay);
+            }
+
+            rightHtml += `
+              <div class="subitem-bar-row">
+                ${compStart && compEnd ? `
+                  <div class="subitem-bar" style="left: ${compX}px; width: ${compW}px; background: rgba(59, 130, 246, 0.4); border-color: #60a5fa;"
+                       onmousemove="showTooltip(event, ${escapeJsonAttr({
+                         title: `Component: ${comp.name}`,
+                         start: formatDateDisplay(compStart),
+                         end: formatDateDisplay(compEnd),
+                         duration: `${diffDays(compStart, compEnd)+1} days`
+                       })})"
+                       onmouseleave="hideTooltip()">
+                    ${comp.name}
+                  </div>
+                ` : ''}
+              </div>
+            `;
+
+            if (comp.subitems && comp.subitems.length > 0) {
+              comp.subitems.forEach(sub => {
+                const subStart = parseDate(sub.startDate);
+                const subEnd = parseDate(sub.endDate);
+                let sX = 0, sW = 0;
+                if (subStart && subEnd) {
+                  sX = dateToPx(subStart);
+                  sW = Math.max(4, (diffDays(subStart, subEnd) + 1) * pxPerDay);
+                }
+                rightHtml += `
+                  <div class="subitem-bar-row">
+                    ${subStart && subEnd ? `
+                      <div class="subitem-bar" style="left: ${sX}px; width: ${sW}px; background: rgba(148, 163, 184, 0.3); border-color: #94a3b8;"
+                           onmousemove="showTooltip(event, ${escapeJsonAttr({
+                             title: `Sub-item: ${sub.name}`,
+                             component: comp.name,
+                             start: formatDateDisplay(subStart),
+                             end: formatDateDisplay(subEnd),
+                             duration: `${diffDays(subStart, subEnd)+1} days`
+                           })})"
+                           onmouseleave="hideTooltip()">
+                        ↳ ${escapeHtml(sub.name)}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              });
+            }
+          });
+          rightHtml += `</div>`;
+        }
+      });
+
+      leftContainer.innerHTML = leftHtml;
+      rightContainer.innerHTML = rightHtml;
+
+      // Sync Heights across matching left and right rows exactly
+      setTimeout(syncRowHeights, 0);
+    }
+
+    function syncRowHeights() {
+      const filtered = getFilteredFeatures();
+      filtered.forEach(feature => {
+        const leftEl = document.getElementById(`left-row-${feature.id}`);
+        const rightEl = document.getElementById(`right-row-${feature.id}`);
+        if (leftEl && rightEl) {
+          const maxH = Math.max(leftEl.offsetHeight, rightEl.offsetHeight, 82);
+          leftEl.style.height = `${maxH}px`;
+          rightEl.style.height = `${maxH}px`;
+        }
+
+        const leftSub = document.getElementById(`left-sub-${feature.id}`);
+        const rightSub = document.getElementById(`right-sub-${feature.id}`);
+        if (leftSub && rightSub) {
+          const subH = Math.max(leftSub.offsetHeight, rightSub.offsetHeight);
+          leftSub.style.height = `${subH}px`;
+          rightSub.style.height = `${subH}px`;
+        }
+      });
+    }
+
+    function toggleExpandRow(id, evt) {
+      if (evt && (evt.target.closest("button") || evt.target.closest(".row-actions-floating"))) return;
+      if (expandedFeatureIds.has(id)) {
+        expandedFeatureIds.delete(id);
+      } else {
+        expandedFeatureIds.add(id);
+      }
+      renderRows();
+    }
+
+    /* =====================================================================
+       Tooltip Logic
+       ==================================================================== */
+    const tooltipEl = document.getElementById("global-tooltip");
+
+    function showTooltip(evt, data) {
+      let content = "";
+      if (data.title) {
+        content += `<h4>${escapeHtml(data.title)}</h4>`;
+      }
+      if (data.desc) {
+        content += `<div style="font-weight:600; margin-bottom:6px; color:#f8fafc;">${escapeHtml(data.desc)}</div>`;
+      }
+      if (data.type) {
+        content += `<div class="tooltip-line"><span class="tooltip-label">Type:</span><span>${data.type}</span></div>`;
+      }
+      if (data.status) {
+        content += `<div class="tooltip-line"><span class="tooltip-label">Status:</span><span>${data.status}</span></div>`;
+      }
+      if (data.personas) {
+        content += `<div class="tooltip-line"><span class="tooltip-label">Personas:</span><span>${data.personas}</span></div>`;
+      }
+      if (data.components) {
+        content += `<div class="tooltip-line"><span class="tooltip-label">Components:</span><span>${data.components}</span></div>`;
+      }
+      if (data.start && data.end) {
+        content += `<div class="tooltip-line"><span class="tooltip-label">Span:</span><span>${data.start} → ${data.end}</span></div>`;
+      }
+      if (data.duration) {
+        content += `<div class="tooltip-line"><span class="tooltip-label">Duration:</span><span>${data.duration}</span></div>`;
+      }
+      if (data.ga) {
+        content += `<div class="tooltip-line" style="color:#d8b4fe; font-weight:700;"><span class="tooltip-label" style="color:#c084fc;">GA Milestone:</span><span>${data.ga}</span></div>`;
+      }
+
+      tooltipEl.innerHTML = content;
+      tooltipEl.style.display = "block";
+
+      const x = Math.min(window.innerWidth - 340, evt.clientX + 15);
+      const y = Math.min(window.innerHeight - 200, evt.clientY + 15);
+      tooltipEl.style.left = `${x}px`;
+      tooltipEl.style.top = `${y}px`;
+    }
+
+    function hideTooltip() {
+      tooltipEl.style.display = "none";
+    }
+
+    /* =====================================================================
+       Feature Line Modal (Add & Edit)
+       ===================================================================== */
+    let modalSelectedPersonas = new Set();
+    let modalSelectedComponentsMap = new Map();
+
+    function openAddModal() {
+      editingFeatureId = null;
+      document.getElementById("modal-title").innerText = "Add New Feature Line";
+      document.getElementById("form-feature-desc").value = "";
+      document.getElementById("form-feature-status").value = "On Track";
+
+      // Default Type: Platform
+      const radio = document.querySelector('input[name="form-feature-type"][value="Platform"]');
+      if (radio) radio.checked = true;
+      updateTypeRadioVisuals();
+
+      // Default personas: SP
+      modalSelectedPersonas = new Set(["SP"]);
+
+      // Default component: Data Product
+      modalSelectedComponentsMap = new Map();
+      modalSelectedComponentsMap.set("Data Product", {
+        startDate: "2026-11-18",
+        endDate: "2026-12-16",
+        subitems: []
+      });
+
+      renderModalPersonaChips();
+      renderModalComponentChecklist();
+      renderModalComponentsEditor();
+      updateModalRollupDisplay();
+
+      document.getElementById("feature-modal").classList.add("open");
+    }
+
+    function openEditModal(featureId) {
+      editingFeatureId = featureId;
+      const feat = featuresData.find(f => f.id === featureId);
+      if (!feat) return;
+
+      document.getElementById("modal-title").innerText = "Edit Feature Line";
+      document.getElementById("form-feature-desc").value = feat.description;
+      document.getElementById("form-feature-status").value = feat.status;
+
+      const radio = document.querySelector(`input[name="form-feature-type"][value="${feat.type}"]`);
+      if (radio) radio.checked = true;
+      updateTypeRadioVisuals();
+
+      modalSelectedPersonas = new Set(feat.personas || []);
+
+      modalSelectedComponentsMap = new Map();
+      (feat.components || []).forEach(c => {
+        modalSelectedComponentsMap.set(c.name, {
+          startDate: c.startDate || "",
+          endDate: c.endDate || "",
+          subitems: JSON.parse(JSON.stringify(c.subitems || []))
+        });
+      });
+
+      renderModalPersonaChips();
+      renderModalComponentChecklist();
+      renderModalComponentsEditor();
+      updateModalRollupDisplay();
+
+      document.getElementById("feature-modal").classList.add("open");
+    }
+
+    function closeModal() {
+      document.getElementById("feature-modal").classList.remove("open");
+      editingFeatureId = null;
+    }
+
+    function updateTypeRadioVisuals() {
+      const selected = document.querySelector('input[name="form-feature-type"]:checked').value;
+      const lblPlatform = document.getElementById("lbl-type-platform");
+      const lblUx = document.getElementById("lbl-type-ux");
+      const lblUseCase = document.getElementById("lbl-type-usecase");
+
+      lblPlatform.className = "type-choice-label";
+      lblUx.className = "type-choice-label";
+      lblUseCase.className = "type-choice-label";
+
+      if (selected === "Platform") lblPlatform.classList.add("selected-platform");
+      else if (selected === "UX") lblUx.classList.add("selected-ux");
+      else if (selected === "Use Case") lblUseCase.classList.add("selected-usecase");
+    }
+
+    /* Modal Personas */
+    function renderModalPersonaChips() {
+      const box = document.getElementById("personas-chips-box");
+      let html = "";
+      availablePersonas.forEach(p => {
+        const isSel = modalSelectedPersonas.has(p);
+        html += `
+          <div class="tag-chip ${isSel ? 'active' : ''}" onclick="toggleModalPersona('${p}')" style="cursor:pointer;">
+            <span>${p}</span>
+            ${isSel ? `<span class="remove-tag" onclick="event.stopPropagation(); toggleModalPersona('${p}')">✕</span>` : `<span>+</span>`}
+          </div>
+        `;
+      });
+      box.innerHTML = html;
+    }
+
+    function toggleModalPersona(persona) {
+      if (modalSelectedPersonas.has(persona)) {
+        modalSelectedPersonas.delete(persona);
+      } else {
+        modalSelectedPersonas.add(persona);
+      }
+      renderModalPersonaChips();
+    }
+
+    function addNewPersonaChip() {
+      const input = document.getElementById("new-persona-input");
+      const val = input.value.trim().toUpperCase();
+      if (!val) return;
+      if (!availablePersonas.includes(val)) {
+        commitOp({ type: "addPersona", value: val });
+      }
+      modalSelectedPersonas.add(val);
+      input.value = "";
+      renderModalPersonaChips();
+      renderPersonaFilterOptions();
+    }
+
+    /* Modal Components */
+    function renderModalComponentChecklist() {
+      const box = document.getElementById("components-picker-box");
+      let html = "";
+      availableComponents.forEach(comp => {
+        const isSel = modalSelectedComponentsMap.has(comp);
+        html += `
+          <div class="tag-chip ${isSel ? 'active' : ''}" onclick="toggleModalComponent('${comp}')" style="cursor:pointer;">
+            <span>${comp}</span>
+            ${isSel ? `<span class="remove-tag" onclick="event.stopPropagation(); toggleModalComponent('${comp}')">✕</span>` : `<span>+</span>`}
+          </div>
+        `;
+      });
+      box.innerHTML = html;
+    }
+
+    function toggleModalComponent(compName) {
+      if (modalSelectedComponentsMap.has(compName)) {
+        modalSelectedComponentsMap.delete(compName);
+      } else {
+        modalSelectedComponentsMap.set(compName, {
+          startDate: "2026-11-18",
+          endDate: "2026-12-16",
+          subitems: []
+        });
+      }
+      renderModalComponentChecklist();
+      renderModalComponentsEditor();
+      updateModalRollupDisplay();
+    }
+
+    function addNewCustomComponent() {
+      const input = document.getElementById("new-component-input");
+      const val = input.value.trim();
+      if (!val) return;
+      if (!availableComponents.includes(val)) {
+        commitOp({ type: "addComponent", value: val });
+      }
+      modalSelectedComponentsMap.set(val, {
+        startDate: "2026-11-18",
+        endDate: "2026-12-16",
+        subitems: []
+      });
+      input.value = "";
+      renderModalComponentChecklist();
+      renderModalComponentsEditor();
+      updateModalRollupDisplay();
+    }
+
+    /* Modal Components Dates & Sub-Items Editor */
+    function renderModalComponentsEditor() {
+      const container = document.getElementById("components-editor-list");
+      if (modalSelectedComponentsMap.size === 0) {
+        container.innerHTML = `<div style="font-size:12px; color:var(--text-dim); text-align:center; padding:10px;">Select at least one component above to configure delivery dates and sub-items.</div>`;
+        return;
+      }
+
+      let html = "";
+      modalSelectedComponentsMap.forEach((compData, compName) => {
+        html += `
+          <div class="component-card-edit">
+            <div class="component-card-top">
+              <span class="component-name-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                ${compName}
+              </span>
+
+              <div class="dates-inputs-inline">
+                <span>Start:</span>
+                <input type="date" class="date-picker-sm" value="${compData.startDate || ''}" onchange="updateCompDate('${compName}', 'startDate', this.value)">
+                <span>End:</span>
+                <input type="date" class="date-picker-sm" value="${compData.endDate || ''}" onchange="updateCompDate('${compName}', 'endDate', this.value)">
+                <button class="btn btn-secondary btn-sm" style="color:#f87171;" onclick="toggleModalComponent('${compName}')">Remove</button>
+              </div>
+            </div>
+
+            <!-- Sub-items List -->
+            <div class="subitems-editor-box">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11px; font-weight:600; color:var(--text-muted); text-transform:uppercase;">Sub-items / Micro-tasks:</span>
+                <button type="button" class="btn btn-secondary btn-sm" onclick="addSubItem('${compName}')">+ Add Sub-item</button>
+              </div>
+        `;
+
+        (compData.subitems || []).forEach((sub, subIdx) => {
+          html += `
+            <div class="subitem-edit-row">
+              <input type="text" placeholder="Sub-item deliverable description..." value="${escapeHtml(sub.name)}" oninput="updateSubItemField('${compName}', ${subIdx}, 'name', this.value)">
+              <input type="date" class="date-picker-sm" value="${sub.startDate || ''}" onchange="updateSubItemField('${compName}', ${subIdx}, 'startDate', this.value)">
+              <input type="date" class="date-picker-sm" value="${sub.endDate || ''}" onchange="updateSubItemField('${compName}', ${subIdx}, 'endDate', this.value)">
+              <button class="btn-icon" style="color:#f87171; padding:3px 6px;" onclick="removeSubItem('${compName}', ${subIdx})">✕</button>
+            </div>
+          `;
+        });
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function updateCompDate(compName, field, value) {
+      if (modalSelectedComponentsMap.has(compName)) {
+        modalSelectedComponentsMap.get(compName)[field] = value;
+        updateModalRollupDisplay();
+      }
+    }
+
+    function addSubItem(compName) {
+      if (modalSelectedComponentsMap.has(compName)) {
+        const comp = modalSelectedComponentsMap.get(compName);
+        comp.subitems.push({
+          name: "New Work Package",
+          startDate: comp.startDate || "2026-11-18",
+          endDate: comp.endDate || "2026-12-02"
+        });
+        renderModalComponentsEditor();
+        updateModalRollupDisplay();
+      }
+    }
+
+    function updateSubItemField(compName, subIdx, field, value) {
+      if (modalSelectedComponentsMap.has(compName)) {
+        const comp = modalSelectedComponentsMap.get(compName);
+        if (comp.subitems[subIdx]) {
+          comp.subitems[subIdx][field] = value;
+          updateModalRollupDisplay();
+        }
+      }
+    }
+
+    function removeSubItem(compName, subIdx) {
+      if (modalSelectedComponentsMap.has(compName)) {
+        const comp = modalSelectedComponentsMap.get(compName);
+        comp.subitems.splice(subIdx, 1);
+        renderModalComponentsEditor();
+        updateModalRollupDisplay();
+      }
+    }
+
+    /* Live Non-Editable Rollup Calculation inside Modal */
+    function updateModalRollupDisplay() {
+      const tempComponents = [];
+      modalSelectedComponentsMap.forEach((cData, cName) => {
+        tempComponents.push({
+          name: cName,
+          startDate: cData.startDate,
+          endDate: cData.endDate,
+          subitems: cData.subitems
+        });
+      });
+
+      const tempFeature = { components: tempComponents };
+      const rollup = calculateFeatureRollup(tempFeature);
+
+      document.getElementById("rollup-start-display").innerText = rollup.startDate ? formatDateDisplay(rollup.startDate) : "--";
+      document.getElementById("rollup-end-display").innerText = rollup.endDate ? formatDateDisplay(rollup.endDate) : "--";
+      document.getElementById("rollup-duration-display").innerText = (rollup.durationDays > 0) ? `${rollup.durationDays} days (${rollup.durationWeeks}w)` : "--";
+      document.getElementById("rollup-ga-display").innerText = rollup.gaDate ? formatDateDisplay(rollup.gaDate) : "--";
+    }
+
+    /* Save Feature from Modal */
+    function saveFeatureFromModal() {
+      const desc = document.getElementById("form-feature-desc").value.trim();
+      if (!desc) {
+        alert("Please enter a feature description.");
+        return;
+      }
+
+      const status = document.getElementById("form-feature-status").value;
+      const type = document.querySelector('input[name="form-feature-type"]:checked').value;
+      const personas = Array.from(modalSelectedPersonas);
+
+      const components = [];
+      modalSelectedComponentsMap.forEach((cData, cName) => {
+        components.push({
+          name: cName,
+          startDate: cData.startDate,
+          endDate: cData.endDate,
+          subitems: cData.subitems
+        });
+      });
+
+      if (components.length === 0) {
+        alert("Please select at least one component.");
+        return;
+      }
+
+      if (editingFeatureId) {
+        const idx = featuresData.findIndex(f => f.id === editingFeatureId);
+        if (idx !== -1) {
+          commitOp({
+            type: "upsertFeature",
+            feature: {
+              id: editingFeatureId,
+              description: desc,
+              status: status,
+              type: type,
+              personas: personas,
+              components: components
+            }
+          });
+        }
+      } else {
+        const newId = "feat-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6);
+        commitOp({
+          type: "upsertFeature",
+          feature: {
+            id: newId,
+            description: desc,
+            status: status,
+            type: type,
+            personas: personas,
+            components: components
+          }
+        });
+      }
+
+      closeModal();
+      renderApp();
+    }
+
+    function cloneFeature(id) {
+      const source = featuresData.find(f => f.id === id);
+      if (!source) return;
+      const copy = JSON.parse(JSON.stringify(source));
+      copy.id = "feat-" + Date.now() + "-" + Math.random().toString(36).slice(2, 6);
+      copy.description = copy.description + " (Copy)";
+      commitOp({ type: "upsertFeature", feature: copy });
+      renderApp();
+    }
+
+    function deleteFeature(id) {
+      if (confirm("Are you sure you want to delete this feature line?")) {
+        expandedFeatureIds.delete(id);
+        commitOp({ type: "deleteFeature", id: id });
+        renderApp();
+      }
+    }
+
+    /* Helpers */
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeJsonAttr(obj) {
+      const json = JSON.stringify(obj);
+      return json.replace(/"/g, "&quot;");
+    }
+
+    /* Initialize Application on DOM Ready */
+    window.addEventListener("DOMContentLoaded", async () => {
+      initTheme();
+      await initSharedData();
+      renderApp();
+      // Centering on Today (11/18/2026) initially
+      setTimeout(jumpToToday, 100);
+    });
+  </script>
+</body>
+</html>
