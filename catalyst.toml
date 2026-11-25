@@ -1,0 +1,7 @@
+[k8s]                          # Container resource settings
+autoscale = true               # Let Kubernetes size the app — default for new apps
+                               # Cannot be combined with storage or replicas
+storage = "1Gi"               # PVC size — omit or set "none" for ephemeral
+cpu = "500m"                  # CPU request (default: 500m)
+memory = "512Mi"              # Memory request (default: 512Mi)
+replicas = 1                   # Replica count (default: 1; max: 10)
